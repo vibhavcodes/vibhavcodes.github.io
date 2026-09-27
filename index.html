@@ -1,36 +1,316 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>KKKasana | Java Backend Engineer</title>
-  <style>
-    body { font-family: Arial, sans-serif; max-width: 800px; margin: auto; padding: 20px; line-height: 1.6; }
-    h1 { margin-bottom: 0; }
-    h2 { border-bottom: 1px solid #ddd; padding-bottom: 4px; }
-    a { color: #0066cc; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vibhav Gupta | Java Backend Engineer</title>
+<meta name="description" content="Vibhav Gupta, Lead Consultant and Java backend engineer in Gurgaon. Spring Boot, Kafka, microservices, AWS.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F3F6F9;
+    --surface: #FFFFFF;
+    --ink: #142031;
+    --muted: #55657A;
+    --line: #D9E1EA;
+    --accent: #1E6A96;
+    --accent-soft: #E1EEF6;
+    --warm: #C98A00;
+    --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+    --body: "Public Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0D1520; --surface: #15202E; --ink: #E4ECF4; --muted: #97A7BA;
+      --line: #263447; --accent: #6DB6E3; --accent-soft: #1A3147; --warm: #E8B23A;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0D1520; --surface: #15202E; --ink: #E4ECF4; --muted: #97A7BA;
+    --line: #263447; --accent: #6DB6E3; --accent-soft: #1A3147; --warm: #E8B23A;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--body); font-size: 17px; line-height: 1.6;
+    transition: background .25s, color .25s;
+  }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible, button:focus-visible { outline: 3px solid var(--warm); outline-offset: 3px; border-radius: 4px; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+
+  /* Top bar */
+  header.bar { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+  .bar .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+  .brand { font-family: var(--display); font-weight: 800; font-size: 1.15rem; color: var(--ink); text-decoration: none; }
+  nav { display: flex; gap: 22px; align-items: center; }
+  nav a { color: var(--muted); text-decoration: none; font-weight: 500; font-size: .95rem; }
+  nav a:hover { color: var(--ink); }
+  .toggle { background: var(--surface); border: 1px solid var(--line); color: var(--ink); width: 38px; height: 38px; border-radius: 50%; cursor: pointer; font-size: 1rem; }
+  @media (max-width: 640px) { nav a { display: none; } }
+
+  /* Hero */
+  .hero { padding: 88px 0 64px; }
+  .hero h1 { font-family: var(--display); font-weight: 800; font-size: clamp(2.8rem, 8vw, 5.4rem); line-height: .98; letter-spacing: -0.03em; margin: 0 0 22px; }
+  .hero .role { font-size: 1.15rem; color: var(--muted); margin: 0 0 8px; }
+  .hero .pitch { font-size: clamp(1.2rem, 2.4vw, 1.5rem); max-width: 34ch; margin: 0 0 32px; line-height: 1.4; }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn { display: inline-block; padding: 11px 20px; border-radius: 8px; font-weight: 600; text-decoration: none; border: 1.5px solid var(--accent); }
+  .btn.primary { background: var(--accent); color: var(--bg); }
+  .btn.ghost { color: var(--accent); }
+
+  /* The signature element: a stream of real numbers from the work */
+  .stream { margin-top: 56px; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); border-top: 2px solid var(--ink); }
+  .stream div { padding: 18px 18px 0 0; }
+  .stream strong { display: block; font-family: var(--display); font-size: 2rem; font-weight: 700; line-height: 1.1; }
+  .stream span { color: var(--muted); font-size: .92rem; }
+
+  section { padding: 64px 0; border-top: 1px solid var(--line); }
+  h2 { font-family: var(--display); font-size: clamp(1.8rem, 4vw, 2.4rem); font-weight: 700; letter-spacing: -0.02em; margin: 0 0 32px; }
+
+  /* Experience as a log: newest entry on top */
+  .log { list-style: none; margin: 0; padding: 0; position: relative; }
+  .log::before { content: ""; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 2px; background: var(--line); }
+  .log li { position: relative; padding: 0 0 36px 40px; }
+  .log li::before { content: ""; position: absolute; left: 0; top: 7px; width: 16px; height: 16px; border-radius: 50%; background: var(--bg); border: 3px solid var(--muted); }
+  .log li:first-child::before { border-color: var(--accent); background: var(--accent); }
+  .log .when { color: var(--muted); font-size: .92rem; font-weight: 500; }
+  .log h3 { font-family: var(--display); font-size: 1.3rem; margin: 2px 0 2px; font-weight: 700; }
+  .log .org { font-weight: 600; color: var(--accent); margin: 0 0 8px; }
+  .log ul { margin: 0; padding-left: 18px; max-width: 72ch; }
+  .log ul li { padding: 0 0 4px; }
+  .log ul li::before { display: none; }
+  details { max-width: 72ch; }
+  summary { cursor: pointer; color: var(--accent); font-weight: 600; margin-bottom: 20px; }
+
+  /* Projects */
+  .projects { display: grid; grid-template-columns: 1.3fr 1fr; gap: 20px; }
+  .projects .card:first-child { grid-row: span 2; }
+  @media (max-width: 820px) { .projects { grid-template-columns: 1fr; } .projects .card:first-child { grid-row: auto; } }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 26px; display: flex; flex-direction: column; }
+  .card:first-child { border-top: 5px solid var(--accent); }
+  .card h3 { font-family: var(--display); font-size: 1.35rem; margin: 0 0 6px; font-weight: 700; }
+  .card .what { color: var(--muted); margin: 0 0 14px; }
+  .card ul { padding-left: 18px; margin: 0 0 18px; }
+  .card ul li { margin-bottom: 6px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: auto 0 16px; padding: 0; list-style: none; }
+  .chips li { background: var(--accent-soft); color: var(--ink); font-size: .82rem; padding: 3px 10px; border-radius: 999px; }
+  .card .link { font-weight: 600; }
+
+  /* Skills */
+  .skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 28px 40px; }
+  .skills h3 { font-family: var(--display); font-size: 1.1rem; margin: 0 0 6px; }
+  .skills p { margin: 0; color: var(--muted); }
+
+  /* Contact */
+  .contact p { font-size: 1.2rem; max-width: 40ch; }
+  .contact .big { font-family: var(--display); font-size: clamp(1.4rem, 4vw, 2.2rem); font-weight: 700; word-break: break-word; }
+  footer { padding: 32px 0 48px; color: var(--muted); font-size: .9rem; border-top: 1px solid var(--line); }
+</style>
 </head>
 <body>
-  <h1>Vibhav Gupta</h1>
-  <p>Java Backend Engineer</p>
 
-  <h2>Skills</h2>
-  <p>Java, Spring Boot, MySQL, Kafka, Microservices, REST APIs</p>
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="#top">Vibhav Gupta</a>
+    <nav aria-label="Main">
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+      <button class="toggle" id="themeToggle" aria-label="Switch to dark mode">☾</button>
+    </nav>
+  </div>
+</header>
 
-  <h2>Experience</h2>
-  <p><b>Backend Engineer – Country Delight</b> (2022 – Present)<br>
-  Built Spring Boot microservices and Kafka-based async systems for a large-scale delivery platform.</p>
+<main id="top">
+  <div class="wrap hero">
+    <p class="role">Lead Consultant, Java backend, Gurgaon</p>
+    <h1>Vibhav Gupta</h1>
+    <p class="pitch">I build event-driven Java systems that stay fast and stay up when traffic spikes.</p>
+    <div class="cta">
+      <a class="btn primary" href="mailto:vibhavcorp@gmail.com">Email me</a>
+      <a class="btn ghost" href="https://linkedin.com/in/vibhav-gupta-660344b4" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn ghost" href="Vibhav_Gupta_Resume.pdf" download>Download resume</a>
+    </div>
 
-  <h2>Projects</h2>
-  <p><b>Inventory Service</b> – Spring Boot + MySQL inventory API.
-  <a href="https://github.com/yourusername/project1">GitHub</a></p>
-  <p><b>E-commerce Backend</b> – Order flow with Razorpay webhooks and idempotent order creation.
-  <a href="https://github.com/yourusername/project2">GitHub</a></p>
+    <div class="stream" aria-label="Highlights">
+      <div><strong>11+ years</strong><span>building Java backends</span></div>
+      <div><strong>1M+</strong><span>inventory events processed a day</span></div>
+      <div><strong>500K+</strong><span>daily orders at sub-200ms p95</span></div>
+      <div><strong>99.95%</strong><span>uptime through festive peaks</span></div>
+    </div>
+  </div>
 
-  <h2>Contact</h2>
-  <p>Email: vibhavcorp@gmail.com.com<br>
-  <a href="https://linkedin.com/in/yourprofile">LinkedIn</a> |
-  <a href="https://github.com/yourusername">GitHub</a></p>
+  <section id="experience">
+    <div class="wrap">
+      <h2>Experience</h2>
+      <ol class="log">
+        <li>
+          <span class="when">Apr 2022 – Present</span>
+          <h3>Lead Consultant</h3>
+          <p class="org">Country Delight (Xebia), Gurgaon</p>
+          <ul>
+            <li>Moved legacy monoliths to Spring Boot microservices on Docker, raising scalability and throughput by 30%.</li>
+            <li>Lead an Agile team of 8 Java developers across sprints, code reviews and mentoring.</li>
+            <li>Run cloud-native services on AWS that absorb 50%+ peak traffic growth at 99.9%+ uptime.</li>
+            <li>Built Jenkins CI/CD pipelines that cut production deployment time by 85%.</li>
+          </ul>
+        </li>
+        <li>
+          <span class="when">Sep 2020 – Mar 2022</span>
+          <h3>Lead Engineer</h3>
+          <p class="org">HCL Technologies</p>
+          <ul>
+            <li>Built highly available Diameter Routing Agents with Java 8, Spring Integration and MongoDB, improving response times by 40%.</li>
+            <li>Introduced JUnit and Cucumber BDD, reducing production bugs by 25% over two releases.</li>
+            <li>Ran routing workloads and backups on GCP; kept 95% of sprints on time.</li>
+          </ul>
+        </li>
+        <li>
+          <span class="when">May 2019 – Sep 2020</span>
+          <h3>Senior Software Engineer</h3>
+          <p class="org">Wipro Technologies</p>
+          <ul>
+            <li>Built a work allocation and automation tool that raised client productivity by 35% with zero major incidents.</li>
+            <li>Lifted sprint success from 72% to 90%+ across three quarters.</li>
+          </ul>
+        </li>
+      </ol>
+      <details>
+        <summary>Earlier roles (2015 – 2019)</summary>
+        <ol class="log">
+          <li>
+            <span class="when">Jul 2018 – Apr 2019</span>
+            <h3>Senior Developer</h3>
+            <p class="org">Airtel</p>
+            <ul>
+              <li>Built the Broadband Management System, giving 50,000+ users self-service and cutting manual work by 60%.</li>
+              <li>Automated CDR generation, latency reports and BRAS live status with Java network programming.</li>
+            </ul>
+          </li>
+          <li>
+            <span class="when">Feb 2015 – Jun 2018</span>
+            <h3>Software Engineer</h3>
+            <p class="org">HCL Technologies</p>
+            <ul>
+              <li>Maintained the Royal Automobile Club of Victoria's customer portal, handling 100,000+ transactions a year.</li>
+              <li>Added admin and user management features, reducing support requests by 28%.</li>
+            </ul>
+          </li>
+        </ol>
+      </details>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="wrap">
+      <h2>Projects</h2>
+      <div class="projects">
+        <article class="card">
+          <h3>Inventory Management Service</h3>
+          <p class="what">Real-time SKU-level stock across 20+ city warehouses, consistent in under a second.</p>
+          <ul>
+            <li>Event-driven engine on Spring Boot 3 and Kafka, handling 1M+ stock events a day with at-least-once delivery and dead-letter recovery.</li>
+            <li>Redis stock cache with optimistic locking: 70% faster reads and no overselling during demand spikes.</li>
+            <li>Blue/Green deployments on AWS EKS, holding 99.95% uptime through festive peaks.</li>
+          </ul>
+          <ul class="chips" aria-label="Tech used">
+            <li>Java 17</li><li>Spring Boot 3</li><li>Spring Cloud</li><li>Kafka</li><li>Redis</li><li>MongoDB</li><li>PostgreSQL</li><li>Kubernetes</li><li>AWS EKS</li>
+          </ul>
+          <a class="link" href="https://github.com/kkkasana" target="_blank" rel="noopener">View on GitHub</a>
+        </article>
+
+        <article class="card">
+          <h3>RouteSheet Generation Service</h3>
+          <p class="what">Nightly route sheets for delivery agents on geo-clustered milk runs.</p>
+          <ul>
+            <li>Spring Batch and Kafka pipeline producing 10K+ route sheets a night, cutting manual ops effort by 80%.</li>
+            <li>Haversine-based clustering and sequencing improved delivery turnaround by 22%.</li>
+            <li>Idempotent APIs with Resilience4j circuit breakers, stable at 3x peak load.</li>
+          </ul>
+          <ul class="chips" aria-label="Tech used">
+            <li>Java 17</li><li>Spring Batch</li><li>Kafka</li><li>PostgreSQL</li><li>Resilience4j</li><li>AWS ECS</li>
+          </ul>
+          <a class="link" href="https://github.com/kkkasana" target="_blank" rel="noopener">View on GitHub</a>
+        </article>
+
+        <article class="card">
+          <h3>Sale Management Service</h3>
+          <p class="what">Subscription-aware sales and order fulfilment behind the customer app.</p>
+          <ul>
+            <li>Sale APIs serving 500K+ daily orders at sub-200ms p95.</li>
+            <li>Kafka order events to billing, inventory and CRM replaced nightly batches and closed 95% of reconciliation gaps.</li>
+            <li>Zero-downtime schema migrations enabling weekly releases.</li>
+          </ul>
+          <ul class="chips" aria-label="Tech used">
+            <li>Java 11</li><li>Spring Data JPA</li><li>Kafka</li><li>MySQL</li><li>Redis</li><li>Jenkins</li>
+          </ul>
+          <a class="link" href="https://github.com/kkkasana" target="_blank" rel="noopener">View on GitHub</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="wrap">
+      <h2>Skills</h2>
+      <div class="skills">
+        <div><h3>Languages</h3><p>Java 8/11/17, concurrency, streams, collections, JavaScript, SQL</p></div>
+        <div><h3>Frameworks</h3><p>Spring Boot 3, Spring Data JPA, Spring MVC, Spring Security, Spring Cloud (Config, OpenFeign, Circuit Breaker), Hibernate, JUnit 5, Cucumber</p></div>
+        <div><h3>Messaging</h3><p>Apache Kafka, Kafka Streams, Schema Registry, consumer groups, at-least-once processing, dead-letter queues</p></div>
+        <div><h3>Cloud and DevOps</h3><p>AWS (EC2, ECS/EKS, S3, RDS, IAM, CloudWatch), GCP (Pub/Sub, BigQuery, Cloud SQL, Dataflow), Docker, Kubernetes, Jenkins, GitHub Actions, Blue/Green and canary releases</p></div>
+        <div><h3>Databases</h3><p>MySQL, PostgreSQL, MongoDB, Oracle, Redis, query optimisation, connection pooling</p></div>
+        <div><h3>Ways of working</h3><p>Agile/Scrum, team leadership, code reviews, mentoring, Git, JIRA</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="wrap">
+      <h2>Contact</h2>
+      <p>Open to backend and platform engineering roles. The fastest way to reach me is email.</p>
+      <a class="big" href="mailto:vibhavcorp@gmail.com">vibhavcorp@gmail.com</a>
+      <p><a href="https://linkedin.com/in/vibhav-gupta-660344b4" target="_blank" rel="noopener">LinkedIn</a> &nbsp;|&nbsp; <a href="https://github.com/kkkasana" target="_blank" rel="noopener">GitHub</a></p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">Vibhav Gupta, Gurgaon, India. B.Tech in Computer Science, UP Technical University, 2014.</div>
+</footer>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    var btn = document.getElementById('themeToggle');
+    var saved = null;
+    try { saved = localStorage.getItem('theme'); } catch (e) {}
+    if (saved) root.setAttribute('data-theme', saved);
+
+    function isDark() {
+      var t = root.getAttribute('data-theme');
+      if (t) return t === 'dark';
+      return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    function render() {
+      var dark = isDark();
+      btn.textContent = dark ? '☀' : '☾';
+      btn.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+    }
+    btn.addEventListener('click', function () {
+      var next = isDark() ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+      render();
+    });
+    render();
+  })();
+</script>
 </body>
 </html>
